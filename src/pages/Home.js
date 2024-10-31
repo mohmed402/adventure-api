@@ -12,7 +12,8 @@ import "../styles/home.css";
 import { useEffect, useState } from "react";
 import { API_KEYS } from "../config/config";
 
-console.log(API_KEYS.rapidapi);
+const RAPIDAPIKEY = API_KEYS.rapidapi;
+
 function Home({ addSearchCity, setIsLoader }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState();
@@ -37,7 +38,7 @@ function Home({ addSearchCity, setIsLoader }) {
       const options = {
         method: "GET",
         headers: {
-          "x-rapidapi-key": "rapidapiKey",
+          "x-rapidapi-key": RAPIDAPIKEY,
           "x-rapidapi-host": "city-and-state-search-api.p.rapidapi.com",
         },
         signal: controller.signal,

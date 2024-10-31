@@ -75,6 +75,13 @@ body {
   background-repeat: round;
 }
 
+.rain {
+  background-image: url("../media/rain.webp");
+  background-repeat: round;
+  display: none;
+  height: 26rem;
+}
+
 .city-text-info {
   position: relative;
   bottom: 150px;

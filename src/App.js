@@ -24,7 +24,7 @@ function App() {
     setCity(true);
     setTimeout(() => {
       setIsLoader(false);
-    }, 4000); // Delay of 1 second
+    }, 5000); // Delay of 1 second
   }
 
   return isCity ? (

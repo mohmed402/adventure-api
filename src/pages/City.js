@@ -1,15 +1,14 @@
 import cityBackground from "../media/ciryBackground.png";
 import scratsh from "../media/scratsh.png";
 import tripoli from "../media/tripoli.jpg";
-import { API_KEYS } from "../config/config";
-
-// import ct from "../media/america.png";
-
-// import mainBackground from "../media/mainBackground.png";
+import unitedKingdomFlag from "../media/ukFlag.png";
+import unitedStatesFlag from "../media/usFlag.png";
 
 import "../styles/city.css";
 import "../styles/weatherElement.css";
+
 import { useEffect, useState } from "react";
+import { API_KEYS } from "../config/config";
 
 function City({ cityName, countryCode, isLoader }) {
   const [citySrc, setCitySrc] = useState("");
@@ -20,16 +19,18 @@ function City({ cityName, countryCode, isLoader }) {
   const [cityData, setCityData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
   const [weatherCodeImg, setWeatherCodeImg] = useState("");
+  const [weatherType, setWeatherType] = useState("");
 
   const [city, country] = cityName.split(", ").map((part) => part.trim());
+
   const options = {
     method: "GET",
     headers: { accept: "application/json" },
   };
 
-  // let rapidapiKey;
-  let TRIPADVISORKEY;
-  let WEATHERKEY;
+  const RAPIDAPIKEY = API_KEYS.rapidapi;
+  const TRIPADVISORKEY = API_KEYS.tripAdvisor;
+  const WEATHERKEY = API_KEYS.weather;
 
   useEffect(() => {
     async function getCityId() {
@@ -102,7 +103,7 @@ function City({ cityName, countryCode, isLoader }) {
       const options = {
         method: "GET",
         headers: {
-          "x-rapidapi-key": "rapidapiKey",
+          "x-rapidapi-key": RAPIDAPIKEY,
           "x-rapidapi-host": "rest-countries10.p.rapidapi.com",
         },
       };
@@ -110,6 +111,12 @@ function City({ cityName, countryCode, isLoader }) {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
+
+        if (country === "United Kingdom") {
+          setCityFlag(unitedKingdomFlag);
+        } else if (country === "United States") {
+          setCityFlag(unitedStatesFlag);
+        }
 
         if (result[0].flag?.officialflag.svg.length > 0) {
           setCityFlag(result[0].flag.officialflag?.svg);
@@ -127,7 +134,7 @@ function City({ cityName, countryCode, isLoader }) {
       const options = {
         method: "GET",
         headers: {
-          "x-rapidapi-key": "rapidapiKey",
+          "x-rapidapi-key": RAPIDAPIKEY,
           "x-rapidapi-host": "country-location-api.p.rapidapi.com",
         },
       };
@@ -157,6 +164,7 @@ function City({ cityName, countryCode, isLoader }) {
         console.log(result);
         setWeatherData(result);
         setWeatherCodeImg(result.weather[0].icon);
+        setWeatherType(result.weather[0].main);
         // setCityData(result.location);
         // if (result.length > 0) {
         // }
@@ -186,10 +194,17 @@ function City({ cityName, countryCode, isLoader }) {
           alt="city"
           className="backgroundImg"
         />
-        {/* <img src={mainBackground} alt="city" className="backgroundImg" /> */}
         <h1 className="cityName">{cityName}</h1>
       </header>
-      <div className={isLoader ? "load" : "weather-phone-size"}></div>
+      <div
+        className={
+          isLoader
+            ? "load"
+            : weatherType === "Rain" || weatherType === "Snow"
+            ? "weather-phone-size rain"
+            : "weather-phone-size"
+        }
+      ></div>
       <main className={isLoader ? "load" : ""}>
         <img src={cityBackground} alt="city" className="cityBackground" />
         <p className="city-text-info">
@@ -516,16 +531,18 @@ function WeatherElement({ weatherData, weatherCodeImg, city }) {
 }
 
 function CityInfo({ cityData }) {
-  return (
-    <ul className="country-info">
-      <li>
-        Population:
-        {cityData?.population && cityData.population?.toLocaleString()}
-      </li>
-      <li>Currency: {cityData.currencies && cityData.currencies[0]}</li>
-      <li>Capital: {cityData.capital}</li>
-      <li>Continent: {cityData.subregion}</li>
-      <li>languages: {cityData.languages && cityData.languages[0]}</li>
-    </ul>
-  );
+  if (cityData) {
+    return (
+      <ul className="country-info">
+        <li>
+          Population:
+          {cityData?.population && cityData.population?.toLocaleString()}
+        </li>
+        <li>Currency: {cityData.currencies && cityData.currencies[0]}</li>
+        <li>Capital: {cityData.capital}</li>
+        <li>Continent: {cityData.subregion}</li>
+        <li>languages: {cityData.languages && cityData.languages[0]}</li>
+      </ul>
+    );
+  }
 }

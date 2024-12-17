@@ -12,6 +12,7 @@ function App() {
 
   function setCity(value) {
     setIsCity(value);
+    // window.localStorage.setItem("searchCity", value);
   }
 
   function addSearchCity(city, countryCode) {

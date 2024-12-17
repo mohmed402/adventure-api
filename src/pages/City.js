@@ -20,6 +20,7 @@ function City({ cityName, countryCode, isLoader }) {
   const [weatherData, setWeatherData] = useState([]);
   const [weatherCodeImg, setWeatherCodeImg] = useState("");
   const [weatherType, setWeatherType] = useState("");
+  const [data, setData] = useState({});
 
   const [city, country] = cityName.split(", ").map((part) => part.trim());
 
@@ -134,7 +135,8 @@ function City({ cityName, countryCode, isLoader }) {
       const options = {
         method: "GET",
         headers: {
-          "x-rapidapi-key": RAPIDAPIKEY,
+          "x-rapidapi-key":
+            "82e1f8169dmshcad00c402757b4ep1aa4eejsnd85fbe51d418",
           "x-rapidapi-host": "country-location-api.p.rapidapi.com",
         },
       };

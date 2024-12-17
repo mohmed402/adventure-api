@@ -46,14 +46,14 @@ export default App;
 
 function Footer() {
   return (
-    <div className="container">
-      <header>
+    <footer className="container">
+      <section>
         <h1 className="logos">
           <span className="logo-highlight">Adven</span> ture
         </h1>
-      </header>
+      </section>
 
-      <div className="info-section">
+      <section className="info-section">
         <div className="connect">
           <h2>CONNECT WITH US</h2>
           <ul>
@@ -64,7 +64,7 @@ function Footer() {
           </ul>
         </div>
 
-        <div className="locations">
+        <section className="locations">
           <h2>LOCATIONS</h2>
           <ul>
             <li>
@@ -83,12 +83,12 @@ function Footer() {
               123 Anywhere St., Any City
             </li>
           </ul>
-        </div>
-      </div>
+        </section>
+      </section>
 
-      <footer>
+      <section>
         <p>info@adventure.com</p>
-      </footer>
-    </div>
+      </section>
+    </footer>
   );
 }

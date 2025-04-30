@@ -1,0 +1,110 @@
+.tableContainer {
+    margin-bottom: 32px;
+  }
+  
+  .searchContainer {
+    margin-bottom: 32px;
+  }
+  
+  .searchInput {
+    color: #f7f8f8;
+    background-color: #0f1011;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+  
+  .searchInput:focus {
+    border-color: #8a8f98;
+    outline: none;
+  }
+  
+  .tableWrapper {
+    background-color: #0f1011;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    overflow: scroll;
+  }
+  
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .table th {
+    text-align: left;
+    color: #8a8f98;
+    padding: 16px;
+    font-weight: 510;
+  }
+  
+  .table td {
+    padding: 16px;
+    border-bottom: 1px solid #ffffff0d;
+  }
+  
+  .actionsColumn {
+    text-align: right;
+  }
+  
+  .statusBadge {
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+  
+  .active {
+    background-color: rgba(104, 204, 88, 0.2);
+    color: rgb(104, 204, 88);
+  }
+  
+  .inactive {
+    background-color: rgba(138, 143, 152, 0.2);
+    color: rgb(138, 143, 152);
+  }
+
+  .admin {
+    background-color: #ff914d6b;
+    color: #ff914d;
+  }
+  
+  .actions {
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+  }
+  
+  .editButton {
+    color: #8a8f98;
+    cursor: pointer;
+    background-color: #252525;
+    border: 1px solid #ffffff1a;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  
+  .editButton:hover {
+    background-color: #ffffff0d;
+    border-color: #fff3;
+  }
+  
+  .deleteButton {
+    color: #8a8f98;
+    cursor: pointer;
+    background-color: #ff00007a;
+    border: 1px solid #ffffff1a;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #ffffff0d;
+    border-color: #fff3;
+  }
+  

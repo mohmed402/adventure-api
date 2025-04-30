@@ -1,0 +1,46 @@
+.dashboard {
+    color: #f7f8f8;
+    background-color: #08090a;
+    min-height: 100vh;
+    display: flex;
+  }
+  
+  .mainContent {
+    width: 100%;
+    transition: margin-left 0.2s;
+    position: relative;
+    margin-left: 240px;
+    overflow: scroll;
+    height: 100vh;
+  }
+  
+  .content {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 96px 24px 48px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+    display: grid;
+    margin-top: 30px;
+  }
+
+  .dark {
+    filter: invert(1);
+  }
+  
+  @media screen and (max-width: 892px) {
+    .mainContent  {
+      margin: 0 auto;
+      margin-left: 0;
+    }
+    .statsGrid{
+      display: flex;
+          gap: 14px;
+          flex-direction: column;
+          flex-wrap: wrap;
+    }
+  }

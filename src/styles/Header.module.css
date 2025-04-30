@@ -1,0 +1,65 @@
+.headerCity {
+    backdrop-filter: blur(20px);
+    z-index: 10;
+    background-color: #0a0a0acc;
+    border-bottom: 1px solid #ffffff14;
+    width: 100%;
+    height: 89px;
+    position: fixed;
+  }
+  
+  .profileWrapper {
+    position: relative;
+    height: 36px;
+    float: right;
+    margin: 27px;
+    filter: invert(0.8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileName {
+    color: #000000;
+    background: floralwhite;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    float: right;
+  }
+  
+  .profileName:hover {
+    background: rgb(207, 195, 173);
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    background-color: #1c1c1c;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    z-index: 1000;
+    width: 100%;
+  }
+  
+  .dropdownItem {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    color: #f7f8f8;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .dropdownItem:hover {
+    background-color: #333333;
+  }
+  

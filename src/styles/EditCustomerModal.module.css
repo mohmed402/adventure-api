@@ -1,0 +1,107 @@
+.modalOverlay {
+    z-index: 1000;
+    background-color: #00000080;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    inset: 0;
+  }
+  
+  .modalContent {
+    background-color: #0f1011;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    width: 72%;
+    max-width: 400px;
+    padding: 24px;
+  }
+  
+  .modalTitle {
+    color: #f7f8f8;
+    margin-bottom: 24px;
+    font-size: 21px;
+    font-weight: 510;
+  }
+  
+  .form {
+    flex-direction: column;
+    gap: 16px;
+    display: flex;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .label {
+    color: #8a8f98;
+    font-size: 13px;
+  }
+  
+  .input,
+  .select {
+    color: #f7f8f8;
+    background-color: #232326;
+    border: 1px solid #ffffff1a;
+    border-radius: 6px;
+    width: 93%;
+    padding: 8px 12px;
+    font-size: 14px;
+    max-width: 398px;
+  }
+  
+  .input:focus,
+  .select:focus {
+    border-color: #8a8f98;
+    outline: none;
+  }
+  
+  .buttonGroup {
+    gap: 12px;
+    margin-top: 24px;
+    display: flex;
+  }
+  
+  .saveButton {
+    color: #08090a;
+    cursor: pointer;
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 510;
+  }
+  
+  .saveButton:hover {
+    background-color: #fff;
+  }
+  
+  .cancelButton {
+    color: #8a8f98;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #ffffff1a;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .cancelButton:hover {
+    background-color: #ffffff0d;
+    border-color: #fff3;
+  }
+  
+  .inputError {
+    border-color: red;
+  }
+  
+  .errorText {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  

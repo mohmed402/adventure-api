@@ -1,4 +1,3 @@
-import logo from "../media/advenLogo.png";
 import mainBackground from "../media/mainBackground.png";
 import searchIcon from "../media/searchIcon.png";
 import addvert from "../media/advertBackground.png";
@@ -11,14 +10,21 @@ import quote from "../media/quote.png";
 import "../styles/home.css";
 import { useEffect, useState } from "react";
 import { API_KEYS } from "../config/config";
+// import Logo from "../components/Logo";
+import Header from "../components/Header";
+import AuthForm from "../components/AuthForm";
 
 const RAPIDAPIKEY = API_KEYS.rapidapi;
 
-function Home({ addSearchCity, setIsLoader }) {
+function Home({ addSearchCity, setIsLoader, setName, name, isLoggedin, setIsLoggedin, setIsProfile }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState();
   const [isSearchListVisible, setIsSearchListVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+
+
+
 
   function setSearchCity(city, countryCode) {
     setSearchQuery(city);
@@ -76,7 +82,7 @@ function Home({ addSearchCity, setIsLoader }) {
   return (
     <>
       <header>
-        <img src={logo} className="logo" alt="Adven ture logo" />
+       <Header toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
         <img src={mainBackground} className="backgroundImg" alt="background" />
         <section className="info-sec">
           <h1 className="header-text">Inspire your travels</h1>
@@ -118,6 +124,7 @@ function Home({ addSearchCity, setIsLoader }) {
           <div className="line"></div>
         </section>
       </header>
+     {isAuth &&  <AuthForm onClose={() => setIsAuth(false)} loggedIn={setIsLoggedin} setName={setName} />}
       <main>
         <h1 className="main-text">Top Destinations</h1>
         <section className="main-sec">

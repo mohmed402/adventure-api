@@ -1,0 +1,56 @@
+.header {
+    backdrop-filter: blur(20px);
+    z-index: 10;
+    background-color: #0a0a0acc;
+    border-bottom: 1px solid #ffffff14;
+    width: 80%;
+    position: fixed;
+  }
+  
+  .headerContent {
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+  }
+
+  .menuIcon {
+    display: flex;
+    filter: invert(1);
+    height: 40px;
+    display: none;
+    cursor: pointer;
+  }
+  
+  .title {
+    letter-spacing: -0.37px;
+    font-size: 21px;
+    font-weight: 510;
+    color: #f7f8f8;
+  }
+  
+  .addButton {
+    color: #08090a;
+    cursor: pointer;
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 510;
+    transition: all 0.2s;
+  }
+  
+  .addButton:hover {
+    background-color: #fff;
+  }
+  @media screen and (max-width: 892px) {
+    .header  {
+    width: 100%;
+    }
+    .menuIcon {
+      display: block;
+    }
+  }

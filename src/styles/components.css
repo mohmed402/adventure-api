@@ -1,0 +1,22 @@
+
+.profile-icon{
+    height: 36px;
+    float: right;
+    margin: 27px;
+    filter: invert(0.8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
+.profile-name{
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    background: floralwhite;
+}
+
+.profile-name:hover {
+    background: rgb(207, 195, 173);
+}

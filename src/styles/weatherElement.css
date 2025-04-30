@@ -4,8 +4,8 @@
   align-items: center;
   justify-content: center;
   filter: opacity(0.9);
-  top: 21%;
-  left: 11%;
+  top: -142%;
+  left: 13%;
   z-index: 3;
 }
 
@@ -133,21 +133,16 @@
 
 @media screen and (max-width: 743px) {
   .cardm {
-    /* top: 85.64%; */
     left: 50%;
     filter: opacity(1);
-    /* margin: 0 20px; */
     transform: translate(-50%, -50%);
-    top: 138%;
+    top: -174%;
     position: relative;
     margin: auto;
   }
 }
 @media screen and (max-width: 260px) {
   .cardm {
-    transform: translate(-50%, -50%);
     top: 137%;
-    position: relative;
-    margin: auto;
   }
 }

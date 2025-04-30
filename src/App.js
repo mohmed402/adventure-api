@@ -2,13 +2,21 @@ import Home from "./pages/Home";
 import City from "./pages/City";
 import Loader from "./pages/Loader";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from './supabaseClient';
+import CustomerDashboard from "./components/CustomerDashboard";
+import Admin from "./pages/Admin";
+import Footer from "./components/Footer";
 
 function App() {
   const [isCity, setIsCity] = useState(false);
   const [cityName, setCityName] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [isLoader, setIsLoader] = useState(false);
+  const [dataCount, setDataCount] = useState(0);
+  const [name, setName] = useState("");
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [isProfile, setIsProfile] = useState(false);
 
   function setCity(value) {
     setIsCity(value);
@@ -28,15 +36,31 @@ function App() {
     }, 5000); // Delay of 1 second
   }
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data?.user) {
+        setIsLoggedin(true);
+        setName(data.user.user_metadata?.name || '');
+      }
+    };
+    checkUser();
+  }, []);
+
+    if(isProfile){
+      return <Admin setIsProfile={setIsProfile} />;
+    } 
+  
+
   return isCity ? (
     <>
-      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} />
+      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} setDataCount={setDataCount} />
       {isLoader && <Loader />}
-      <Footer />
+      {/* <Footer /> */}
     </>
   ) : (
     <>
-      <Home addSearchCity={addSearchCity} setIsLoader={showLoader} />
+      <Home addSearchCity={addSearchCity} setIsLoader={showLoader} setName={setName} name={name} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} setIsProfile={setIsProfile} />
       <Footer />
     </>
   );
@@ -44,51 +68,4 @@ function App() {
 
 export default App;
 
-function Footer() {
-  return (
-    <footer className="container">
-      <section>
-        <h1 className="logos">
-          <span className="logo-highlight">Adven</span> ture
-        </h1>
-      </section>
 
-      <section className="info-section">
-        <div className="connect">
-          <h2>CONNECT WITH US</h2>
-          <ul>
-            <li>Instagram</li>
-            <li>Twitter</li>
-            <li>Facebook</li>
-            <li>LinkedIn</li>
-          </ul>
-        </div>
-
-        <section className="locations">
-          <h2>LOCATIONS</h2>
-          <ul>
-            <li>
-              DELHI
-              <br />
-              123 Anywhere St., Any City
-            </li>
-            <li>
-              MUMBAI
-              <br />
-              123 Anywhere St., Any City
-            </li>
-            <li>
-              AGRA
-              <br />
-              123 Anywhere St., Any City
-            </li>
-          </ul>
-        </section>
-      </section>
-
-      <section>
-        <p>info@adventure.com</p>
-      </section>
-    </footer>
-  );
-}

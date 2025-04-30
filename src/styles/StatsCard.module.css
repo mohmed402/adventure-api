@@ -1,0 +1,46 @@
+.card {
+    background-color: #0f1011;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  
+  .cardHeader {
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    display: flex;
+  }
+  
+  .statusDot {
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+  }
+  
+  .active {
+    background-color: #68cc58;
+  }
+  
+  .inactive {
+    background-color: #8a8f98;
+  }
+  
+  .total {
+    background-color: #b59aff;
+  }
+  
+  .title {
+    color: #d0d6e0;
+    letter-spacing: -0.1px;
+    font-size: 14px;
+    font-weight: 510;
+  }
+  
+  .value {
+    letter-spacing: -1px;
+    color: #f7f8f8;
+    font-size: 36px;
+    font-weight: 510;
+  }
+  

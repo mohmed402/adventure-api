@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
 import DashboardHeader from "./DashboardHeader";
 import StatsCard from "./StatsCard";
-import CustomerTable from "./CustomerTable";
 import EditCustomerModal from "./EditCustomerModal";
 import styles from "../styles/CustomerDashboard.module.css";
-import getData from "../api/getData";
 import { handleSaveCustomer } from "../api/handleSaveCustomer";
+import getCityData from "../api/getCityData";
+import CityTable from "./CityTable";
 
-const CustomerDashboard = ({setIsProfile, pageNumber, setPageNumber}) => {
+const CityData = ({setIsProfile, pageNumber, setPageNumber}) => {
   const [customers, setCustomers] = useState([]);
   const [isNavOpen, setIsNavOpen] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -27,9 +27,10 @@ const CustomerDashboard = ({setIsProfile, pageNumber, setPageNumber}) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getData("venues");
+        const response = await getCityData();
         if (Array.isArray(response)) {
           setCustomers(response);
+        console.log("this is the city-data: ", response)
         } else {
           console.error("No array received from getData:", response);
           setCustomers([]); // fallback to empty array
@@ -102,7 +103,7 @@ const CustomerDashboard = ({setIsProfile, pageNumber, setPageNumber}) => {
             <StatsCard title="Total Users" value={stats.total} status="total" />
           </section>
 
-          <CustomerTable
+          <CityTable
             customers={filteredCustomers}
             onEdit={(customer) => {
               setSelectedCustomer(customer);
@@ -129,4 +130,4 @@ const CustomerDashboard = ({setIsProfile, pageNumber, setPageNumber}) => {
   );
 };
 
-export default CustomerDashboard;
+export default CityData;

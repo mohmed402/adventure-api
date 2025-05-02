@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+serpapi/
+**/serpapi/
+**/searches/
+public/serpapi/
+node_modules/
+.env
+**/.env
+.env
+backend/.env

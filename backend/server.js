@@ -4,13 +4,19 @@ import cors from "cors";
 import userTable from "./routes/userTable.js"; 
 import authRoutes from './routes/auth.js';
 import insertUser from './routes/insertUser.js';
+import cityRoutes from './routes/city.js';
+import cityCheck from './routes/cityCheck.js';
+import saveCityRoutes from './routes/saveCity.js';
+import weather from './routes/weather.js';
+import getCityData from './routes/getCityData.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  // `${process.env.REACT_PUBLIC_DOMAIN_URL}`,
+  `https://117a-149-170-253-185.ngrok-free.app`,
 ];
 
 const corsOptions = {
@@ -36,6 +42,11 @@ app.get("/", (req, res) => {
 app.use("/users", userTable);
 app.use('/auth', authRoutes);
 app.use('/auth', insertUser);
+app.use('/city', cityRoutes);
+app.use('/cityCheck', cityCheck);
+app.use('/city', saveCityRoutes);
+app.use('/weather', weather);
+app.use('/city', getCityData);
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);

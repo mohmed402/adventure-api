@@ -1,282 +1,185 @@
-import cityBackground from "../media/ciryBackground.png";
-import scratsh from "../media/scratsh.png";
-import tripoli from "../media/tripoli.jpg";
+import "../styles/city.css";
+import { saveCityData } from "../hooks/useSaveCity";
+import { useRef, useEffect, useState } from "react";
+import WeatherElement from "../components/WeatherElement";
+import Logo from "../components/Logo";
 import unitedKingdomFlag from "../media/ukFlag.png";
 import unitedStatesFlag from "../media/usFlag.png";
+import tripoli from "../media/tripoli.jpg";
+import {
+  useCityImages,
+  useFlag,
+  useCityData,
+  useWeather,
+  useThingsToDo,
+} from "../hooks/useCityApi";
 
-import "../styles/city.css";
+import { getCheckedCity } from "../hooks/useCheckedCity";
+import { saveWeatherData } from "../hooks/useSaveWeather";
+import Header from "../components/Header";
+import AuthForm from "../components/AuthForm";
 
-import { useEffect, useState } from "react";
-import { API_KEYS } from "../config/config";
-import WeatherElement from "../components/WeatherElement";
-import DashboardHeader from "../components/DashboardHeader";
-import Logo from "../components/Logo";
 
-function City({ cityName, countryCode, isLoader, setDataCount }) {
+function City({ cityName, countryCode, isLoader, setDataCount, onImagesLoaded, setCity, setName, name, isLoggedin, setIsLoggedin, setIsProfile }) {
   const [citySrc, setCitySrc] = useState("");
   const [cityArray, setCityArray] = useState([]);
-  const [cityId, setCityId] = useState("");
   const [cityFlag, setCityFlag] = useState("");
-  const [toDoCityData, setToDoCityData] = useState();
+  const [thingsToDo, setThingsToDo] = useState([]);
   const [cityData, setCityData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
   const [weatherCodeImg, setWeatherCodeImg] = useState("");
   const [weatherType, setWeatherType] = useState("");
-  const [data, setData] = useState({});
-
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [isAuth, setIsAuth] = useState(false);
+  const totalImages = thingsToDo.length;
+  const weatherSaved = useRef(false);
   const [city, country] = cityName.split(", ").map((part) => part.trim());
 
-  const options = {
-    method: "GET",
-    headers: { accept: "application/json" },
-  };
-
-  const RAPIDAPIKEY = API_KEYS.rapidapi;
-  const TRIPADVISORKEY = API_KEYS.tripAdvisor;
-  const WEATHERKEY = API_KEYS.weather;
-
   useEffect(() => {
-    async function getCityId() {
+    async function fetchCheckedCity() {
       try {
-        const response = await fetch(
-          `https://api.content.tripadvisor.com/api/v1/location/search?key=${TRIPADVISORKEY}&searchQuery=${encodeURIComponent(
-            cityName
-          )}&language=en`,
-          options
-        );
-        const data = await response.json();
-
-        // Check if data is returned properly
-        if (data && data.data && data.data.length > 0) {
-          const updatedCityArray = [];
-          data.data.forEach((cityId, index) => {
-            index < 4 && updatedCityArray.push(cityId.location_id);
-          });
-          setCityArray((array) => [...updatedCityArray]); // Merge old with new
-          setToDoCityData(data);
-
-          setCityId(data.data[0].location_id); // Assuming location_id is needed
-          setDataCount(1)
+        const { data, source } = await getCheckedCity(cityName);
+        const places = data?.raw?.places || [];
+  
+        setDataCount(1); // Optional, for debugging/progress
+  
+        if (source === 'api') {
+          await saveCityData({
+            name: cityName,
+            mainImage: citySrc,
+            images: cityArray,
+            places,
+            raw: data.raw
+          });          
         }
       } catch (err) {
-        console.error("Error fetching city ID:", err);
+        console.error("Checked city fetch error:", err.message || err);
       }
     }
+  
+    if (cityName && citySrc) fetchCheckedCity();
+  }, [cityName, citySrc]);
 
-    if (cityName) {
-      getCityId();
-    }
-  }, [cityName]);
 
+
+// make sure these are passed:
+useEffect(() => {
+  if (
+    weatherData?.weather && 
+    weatherData?.main && 
+    !weatherSaved.current
+  ) {
+    console.log("📦 Saving weather for:", city, countryCode); // ✅ Debug line
+    saveWeatherData(city, countryCode); // <--- city should be e.g. "Liverpool"
+    weatherSaved.current = true;
+  }
+}, [weatherData]);
+  
+  
+
+  useCityImages(cityArray, cityName, setCitySrc, setCityArray, setDataCount);
+  useThingsToDo(city, setThingsToDo, setLoadedCount, setDataCount);
+  useFlag(country, setCityFlag, setDataCount, unitedKingdomFlag, unitedStatesFlag);
+  useCityData(country, setCityData, setDataCount);
+  useWeather(city, countryCode, setWeatherData, setWeatherCodeImg, setWeatherType, setDataCount);
+
+  
   useEffect(() => {
-    async function getCityImage(id, index) {
-      if (id) {
-        try {
-          const response = await fetch(
-            `https://api.content.tripadvisor.com/api/v1/location/${id}/photos?key=${TRIPADVISORKEY}&language=en`,
-            options
-          );
-          const data = await response.json();
-
-          // Check if data is returned properly
-          if (data && data.data && data.data.length > 0) {
-            if (index === 0) {
-              setCitySrc(data.data[0].images.original.url);
-            } else {
-              const updatedCityArray = [];
-              data.data.forEach((cityId) => {
-                updatedCityArray.push(cityId.images.original.url); // Fix typo
-              });
-              setCityArray((array) => [...updatedCityArray]); // Merge
-              setDataCount(2)
-
-            }
-          }
-        } catch (err) {
-          console.error("Error fetching city image:", err);
-        }
-      }
+    if (totalImages > 0 && loadedCount === totalImages) {
+      onImagesLoaded();
     }
 
-    cityArray?.forEach((cityId, index) => {
-      getCityImage(cityId, index);
-    });
-  }, [cityId]);
+    const timeout = setTimeout(() => {
+      console.warn("⚠️ Image load fallback triggered");
+      onImagesLoaded();
+    }, 7000);
 
-  useEffect(() => {
-    async function getFlag() {
-      const url = `https://rest-countries10.p.rapidapi.com/country/${country}`;
-      const options = {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key": RAPIDAPIKEY,
-          "x-rapidapi-host": "rest-countries10.p.rapidapi.com",
-        },
-      };
-
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-
-        if (country === "United Kingdom") {
-          setCityFlag(unitedKingdomFlag);
-          setDataCount(3)
-        } else if (country === "United States") {
-          setCityFlag(unitedStatesFlag);
-          setDataCount(3)
-        }
-
-        if (result[0].flag?.officialflag.svg.length > 0) {
-          setCityFlag(result[0].flag.officialflag?.svg);
-          setDataCount(3)
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getFlag();
-  }, [country]);
-
-  useEffect(() => {
-    async function getCityData() {
-      const url = `https://country-location-api.p.rapidapi.com/location?country=${country}`;
-      const options = {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "82e1f8169dmshcad00c402757b4ep1aa4eejsnd85fbe51d418",
-          "x-rapidapi-host": "country-location-api.p.rapidapi.com",
-        },
-      };
-
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        setCityData(result.location);
-        setDataCount(4)
-
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getCityData();
-  }, [country]);
-
-  useEffect(() => {
-    async function getWeather() {
-      // const url = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${"manchester"}&appid=${WEATHERKEY}`;
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&appid=${WEATHERKEY}`;
-      //api.openweathermap.org/data/2.5/weather?q={city name},{country code}&appid={API key}
-
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-        console.log(result);
-        setWeatherData(result);
-        setWeatherCodeImg(result.weather[0].icon);
-        setWeatherType(result.weather[0].main);
-        setDataCount(5)
-    
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getWeather();
-  }, [city, countryCode]);
+    return () => clearTimeout(timeout);
+  }, [loadedCount, totalImages]);
 
   return (
     <>
-    <header className={isLoader ? "load" : "cityHeader"}>
-      <section className="header-city">
-        <Logo />
-      </section>
-      <img src={city === "Tripoli" ? tripoli : citySrc} alt="city" className="backgroundImg" />
-  
+      <header className={isLoader ? "load" : "cityHeader"}>
+      <Header toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
+        {/* <section className="header-city">
+          <Logo />
+        </section> */}
+        <img src={city === "Tripoli" ? tripoli : citySrc} alt="city" className="backgroundImg" />
         <h1 className="cityName">{cityName}</h1>
-      <div className="header-overlay">
-        <img src={cityFlag} alt="flag" className="flag" />
-        
-      </div>
-        </header>
-  
-    <div
-      className={
+        <div className="header-overlay">
+          <img src={cityFlag} alt="flag" className="flag" />
+        </div>
+      </header>
+      {isAuth &&  <AuthForm onClose={() => setIsAuth(false)} loggedIn={setIsLoggedin} setName={setName} />}
+      <div className={
         isLoader
           ? "load"
           : weatherType === "Rain" || weatherType === "Snow"
-          ? "weather-phone-size rain"
-          : "weather-phone-size"
-      }
-    ></div>
-  
-    <main className={isLoader ? "load" : ""}>
-      {/* <img src={cityBackground} alt="city background" className="cityBackground" /> */}
-      <section className="cityBackground">
-      <CityInfo cityData={cityData} />
-        {weatherData.main && (
-          <WeatherElement
-          weatherData={weatherData}
-          city={city}
-          weatherCodeImg={weatherCodeImg}
-          />
-        )}
-      </section>
-      <section className="city-description">
-        <p className="city-text-info">
-          {/* your paragraph here */}
-        </p>
-      </section>
-  
-      <section>
-        <h1 className="header-city-text">
-          Things to do in <span className="highlited">{city}</span>
-        </h1>
-        <section className="todo-container">
-          {toDoCityData?.data?.map(
-            (todo, index) =>
-              index < 4 && (
-                <TodoPlace
-                  key={todo.id || index} // Important: Add a unique key
-                  todo={todo}
-                  index={index + 1}
-                  cityArray={cityArray}
-                />
-              )
+            ? "weather-phone-size rain"
+            : "weather-phone-size"
+      }></div>
+
+      <main className={isLoader ? "load" : ""}>
+        <section className="cityBackground">
+          <CityInfo cityData={cityData} />
+          {weatherData.main && (
+            <WeatherElement
+              weatherData={weatherData}
+              city={city}
+              weatherCodeImg={weatherCodeImg}
+            />
           )}
         </section>
-      </section>
-    </main>
-  </>
-  
+
+        <section className="city-description">
+          <p className="city-text-info"></p>
+        </section>
+
+        <section>
+          <h1 className="header-city-text">
+            Things to do in <span className="highlited">{city}</span>
+          </h1>
+          <section className="todo-container">
+            {thingsToDo.map((place, index) => (
+              <TodoPlace
+                key={index}
+                place={place}
+                onImageLoad={() => setLoadedCount((prev) => prev + 1)}
+              />
+            ))}
+          </section>
+        </section>
+      </main>
+    </>
   );
 }
 
 export default City;
 
-function TodoPlace({ todo, index, cityArray }) {
+function TodoPlace({ place, onImageLoad }) {
+  const isValidImage = typeof place.thumbnail === 'string' && place.thumbnail.startsWith('http');
+  const hasAddress = place.address && place.address.trim().length > 0;
+
   return (
-    <div key={todo.location_id} className="todo-sec">
-      <img src={cityArray[index]} alt={todo.name} className="to-do-image" />
-      <h2 className="todo-title">{todo.name}</h2>
-      <p>{todo.address_obj.address_string}</p>
+    <div className="todo-sec">
+      {isValidImage && (
+        <img src={place.thumbnail} alt={place.title} className="to-do-image" onLoad={onImageLoad} />
+      )}
+      <h2 className="todo-title">{place.title}</h2>
+      <p>{hasAddress ? place.address : "No address provided"}</p>
     </div>
   );
 }
-
-
 
 function CityInfo({ cityData }) {
   if (cityData) {
     return (
       <ul className="country-info">
-        <li>
-          Population:
-          {cityData?.population && cityData.population?.toLocaleString()}
-        </li>
+        <li>Population: {cityData?.population?.toLocaleString()}</li>
         <li>Currency: {cityData.currencies && cityData.currencies[0]}</li>
         <li>Capital: {cityData.capital}</li>
         <li>Continent: {cityData.subregion}</li>
-        <li>languages: {cityData.languages && cityData.languages[0]}</li>
+        <li>Languages: {cityData.languages && cityData.languages[0]}</li>
       </ul>
     );
   }

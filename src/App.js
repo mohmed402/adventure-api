@@ -4,7 +4,6 @@ import Loader from "./pages/Loader";
 import "./App.css";
 import { useState, useEffect } from "react";
 import { supabase } from './supabaseClient';
-import CustomerDashboard from "./components/CustomerDashboard";
 import Admin from "./pages/Admin";
 import Footer from "./components/Footer";
 
@@ -31,9 +30,10 @@ function App() {
   function showLoader() {
     setIsLoader(true);
     setCity(true);
-    setTimeout(() => {
-      setIsLoader(false);
-    }, 5000); // Delay of 1 second
+  }
+
+  function hideLoader() {
+    setIsLoader(false);
   }
 
   useEffect(() => {
@@ -47,6 +47,8 @@ function App() {
     checkUser();
   }, []);
 
+  
+
     if(isProfile){
       return <Admin setIsProfile={setIsProfile} />;
     } 
@@ -54,9 +56,9 @@ function App() {
 
   return isCity ? (
     <>
-      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} setDataCount={setDataCount} />
+      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} setDataCount={setDataCount} onImagesLoaded={hideLoader}  setCity={setCity} setName={setName} name={name} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} setIsProfile={setIsProfile} />
       {isLoader && <Loader />}
-      {/* <Footer /> */}
+      <Footer />
     </>
   ) : (
     <>

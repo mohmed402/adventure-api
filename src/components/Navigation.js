@@ -3,7 +3,7 @@ import styles from "../styles/Navigation.module.css";
 import Switch from "./Switch";
 import handleLogout from "../api/handleLogout";
 
-const Navigation = ({ selected, isNavOpen, onToggleCollapse, onToggleDarkMode, onToggleSignOut }) => {
+const Navigation = ({ selected, setPageNumber, isNavOpen, onToggleCollapse, onToggleDarkMode, onToggleSignOut }) => {
 
   function signOut() {
     if (onToggleSignOut) onToggleSignOut(); // ✅ call the function
@@ -29,12 +29,12 @@ const Navigation = ({ selected, isNavOpen, onToggleCollapse, onToggleDarkMode, o
 
         <ul className={styles.navList}>
           <li>
-          <a href="#" className={`${styles.navLink} ${selected == 0 && styles.navSelected}`}>
-               Dashboard
+          <a href="#" className={`${styles.navLink} ${selected == 0 && styles.navSelected}`} onClick={()=>setPageNumber(0)}>
+               City
           </a>
           </li>
           <li>
-          <a href="#" className={`${styles.navLink} ${selected == 1 && styles.navSelected}`}>
+          <a href="#" className={`${styles.navLink} ${selected == 1 && styles.navSelected}`} onClick={()=>setPageNumber(1)}>
               Users
             </a>
           </li>

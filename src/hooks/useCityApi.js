@@ -1,27 +1,6 @@
 // frontend/hooks/useCityApi.js
 import { useEffect } from "react";
 
-// export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, setDataCount) {
-//   useEffect(() => {
-//     async function fetchImages() {
-//       try {
-//         const res = await fetch(`http://localhost:5001/city/images?cityName=${encodeURIComponent(cityName)}`);
-//         const data = await res.json();
-
-//         if (data?.imageUrls?.length > 0) {
-//           setCitySrc(data.imageUrls[0]);
-//           setCityArray(data.imageUrls.slice(1, 4));
-//           setDataCount(2);
-//         }
-//       } catch (err) {
-//         console.error("CityImages Error:", err);
-//       }
-//     }
-
-//     if (cityName) fetchImages();
-//   }, [cityName]);
-// }
-// frontend/hooks/useCityApi.js
 export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, setDataCount) {
   useEffect(() => {
     async function fetchImages() {
@@ -30,8 +9,8 @@ export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, set
         const data = await res.json();
 
         if (data?.imageUrls?.length > 0) {
-          setCitySrc(data.imageUrls[0]);                      // ✅ Main image
-          setCityArray(data.imageUrls.slice(1));              // ✅ Remaining images (for to-do places, etc.)
+          setCitySrc(data.imageUrls[0]);                      
+          setCityArray(data.imageUrls.slice(1));              
           setDataCount(2);
         }
       } catch (err) {
@@ -44,25 +23,6 @@ export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, set
 }
 
 
-// export function useThingsToDo(city, setThingsToDo, setLoadedCount, setDataCount) {
-//   useEffect(() => {
-//     async function fetchThingsToDo() {
-//       try {
-//         // const res = await fetch(`http://localhost:5001/city/thingsToDo?q=things to do in ${city}`);
-//         const res = await fetch(`http://localhost:5001/city/thingsToDo?q=${city}`);
-//         const json = await res.json();
-//         const items = json.results.slice(0, 4);
-//         // setThingsToDo(items);
-//         setThingsToDo(items.results.slice(0, 4));
-//         setLoadedCount(items.length);
-//         setDataCount(1);
-//       } catch (err) {
-//         console.error("ThingsToDo Error:", err);
-//       }
-//     }
-//     if (city) fetchThingsToDo();
-//   }, [city]);
-// }
 export function useThingsToDo(city, setThingsToDo, setLoadedCount, setDataCount) {
     useEffect(() => {
       async function fetchThingsToDo() {
@@ -137,7 +97,7 @@ export function useWeather(city, countryCode, setWeatherData, setWeatherCodeImg,
         setWeatherData(data);
         setWeatherCodeImg(data.weather?.[0]?.icon || "");
         setWeatherType(data.weather?.[0]?.main || "");
-        setDataCount(5);  // Optional: used for tracking steps
+        setDataCount(5);  
       } catch (err) {
         console.error("Weather Error:", err.message || err);
       }

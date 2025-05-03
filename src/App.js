@@ -56,7 +56,7 @@ function App() {
 
   return isCity ? (
     <>
-      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} setDataCount={setDataCount} onImagesLoaded={hideLoader}  setCity={setCity} setName={setName} name={name} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} setIsProfile={setIsProfile} />
+      <City cityName={cityName} countryCode={countryCode} isLoader={isLoader} setDataCount={setDataCount} onImagesLoaded={hideLoader}  setCity={setCity} setName={setName} name={name} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} setIsProfile={setIsProfile} setIsCity={setIsCity} />
       {isLoader && <Loader />}
       <Footer />
     </>

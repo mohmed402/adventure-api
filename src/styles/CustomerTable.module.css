@@ -108,3 +108,7 @@
     border-color: #fff3;
   }
   
+
+  .cityImg {
+    filter: invert(1);
+  }

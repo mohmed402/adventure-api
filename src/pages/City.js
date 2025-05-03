@@ -20,7 +20,7 @@ import Header from "../components/Header";
 import AuthForm from "../components/AuthForm";
 
 
-function City({ cityName, countryCode, isLoader, setDataCount, onImagesLoaded, setCity, setName, name, isLoggedin, setIsLoggedin, setIsProfile }) {
+function City({ cityName, countryCode, isLoader, setDataCount, onImagesLoaded, setCity, setName, name, isLoggedin, setIsLoggedin, setIsProfile, setIsCity }) {
   const [citySrc, setCitySrc] = useState("");
   const [cityArray, setCityArray] = useState([]);
   const [cityFlag, setCityFlag] = useState("");
@@ -100,7 +100,7 @@ useEffect(() => {
   return (
     <>
       <header className={isLoader ? "load" : "cityHeader"}>
-      <Header toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
+      <Header setIsCity={setIsCity} toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
         {/* <section className="header-city">
           <Logo />
         </section> */}

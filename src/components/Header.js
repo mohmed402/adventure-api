@@ -5,7 +5,7 @@ import { useState } from 'react';
 import onLogout from "../api/handleLogout.js"
 import styles from '../styles/Header.module.css'; // New module CSS for header
 
-function Header({ toggleAuth, isLoggedin, name, setIsProfile}) {
+function Header({ setIsCity, setCity, toggleAuth, isLoggedin, name, setIsProfile}) {
   const [showDropdown, setShowDropdown] = useState(false);
 //   const [isLoggedin, setIsLoggedin] = useState(false);
 
@@ -17,6 +17,10 @@ function Header({ toggleAuth, isLoggedin, name, setIsProfile}) {
     <section className={styles.headerCity}>
       <Logo />
       { isLoggedin ? <div className={styles.profileWrapper}>
+        <div className={styles.homeNav}>
+         <p onClick={()=> setIsCity(false)}>{setIsCity ? "Exit" : ""}</p>
+
+        </div>
         <p className={styles.profileName} onClick={toggleDropdown}>
           {name} ▼
         </p>

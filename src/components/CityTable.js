@@ -9,6 +9,9 @@ const CityTable = ({
   searchQuery,
 }) => {
 
+// console.log(customers[0])
+console.log(customers[0]?.raw?.imageUrls[0]);
+
   const statusMapping = {
     0: "inactive",
     1: "active",
@@ -55,23 +58,29 @@ const CityTable = ({
           city.email.toLowerCase().includes(searchLower)
         );
       })
-      .map((city) => {
-        const [cityName, country] = trimCity(city.name); // 👈 call trimCity here
+      .map((city, i) => {
+        const [cityName, country] = trimCity(city.name);
 
         return (
           <tr key={city.user_id}>
-            <td>
-              {city.places?.[0]?.thumbnail && (
-                <img
-                  src={city.places[0].thumbnail}
-                  alt={city.places[0].title || "Place Thumbnail"}
-                  width="100"
-                />
-              )}
+           <td>
+            {city.raw?.imageUrls?.[0] && (
+              <img
+                src={city.raw.imageUrls[0]}
+                alt={city.raw?.places?.[0]?.title || "City Image"}
+                width="100"
+                className={styles.cityImg}
+              />  
+            )}
             </td>
             <td>{cityName}</td>
             <td>{country}</td>
-            <td>{city.last_active}</td>
+            <td>{new Date(city.created_at).toLocaleDateString("en-GB", {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            })}</td>
+
             <td>
               <div className={styles.actions}>
                 <button

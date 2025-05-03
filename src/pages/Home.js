@@ -82,7 +82,7 @@ function Home({ addSearchCity, setIsLoader, setName, name, isLoggedin, setIsLogg
   return (
     <>
       <header>
-       <Header toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
+       <Header cityName={searchQuery} setCity={setSearchQuery} toggleAuth={() => setIsAuth(!isAuth)} isLoggedin={isLoggedin} name={name} setIsProfile={setIsProfile} />
         <img src={mainBackground} className="backgroundImg" alt="background" />
         <section className="info-sec">
           <h1 className="header-text">Inspire your travels</h1>

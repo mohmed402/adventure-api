@@ -16,11 +16,10 @@ function Header({ setIsCity, setCity, toggleAuth, isLoggedin, name, setIsProfile
   return (
     <section className={styles.headerCity}>
       <Logo />
-      { isLoggedin ? <div className={styles.profileWrapper}>
-        <div className={styles.homeNav}>
+      <div className={styles.homeNav}>
          <p onClick={()=> setIsCity(false)}>{setIsCity ? "Exit" : ""}</p>
-
-        </div>
+      { isLoggedin ? <div className={styles.profileWrapper}>
+        
         <p className={styles.profileName} onClick={toggleDropdown}>
           {name} ▼
         </p>
@@ -35,6 +34,8 @@ function Header({ setIsCity, setCity, toggleAuth, isLoggedin, name, setIsProfile
           </div>
         )}
       </div> :  <img onClick={toggleAuth} className="profile-icon" src={profileIcon} alt="profile icon" /> }
+      </div>
+   
     </section>
   );
 }

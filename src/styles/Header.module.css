@@ -1,6 +1,10 @@
 
 .homeNav {
-  margin: 0 40px;
+  color: aliceblue;
+    float: right;
+    display: flex
+;
+    align-items: center;
 }
 
 

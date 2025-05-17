@@ -1,11 +1,13 @@
 // frontend/hooks/useCityApi.js
 import { useEffect } from "react";
 
+
+const BASE_URL = "adventure-api-production.up.railway.app";
 export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, setDataCount) {
   useEffect(() => {
     async function fetchImages() {
       try {
-        const res = await fetch(`http://localhost:5001/city/images?cityName=${encodeURIComponent(cityName)}`);
+        const res = await fetch(`${BASE_URL}/city/images?cityName=${encodeURIComponent(cityName)}`);
         const data = await res.json();
 
         if (data?.imageUrls?.length > 0) {
@@ -27,7 +29,7 @@ export function useThingsToDo(city, setThingsToDo, setLoadedCount, setDataCount)
     useEffect(() => {
       async function fetchThingsToDo() {
         try {
-          const res = await fetch(`http://localhost:5001/city/thingsToDo?q=${city}`);
+          const res = await fetch(`${BASE_URL}/city/thingsToDo?q=${city}`);
           const json = await res.json();
           const items = json.results.slice(0, 4);
           setThingsToDo(items);                  
@@ -46,7 +48,7 @@ export function useFlag(country, setCityFlag, setDataCount, unitedKingdomFlag, u
   useEffect(() => {
     async function fetchFlag() {
       try {
-        const response = await fetch(`http://localhost:5001/city/flag/${country}`);
+        const response = await fetch(`${BASE_URL}/city/flag/${country}`);
         const result = await response.json();
 
         if (country === "United Kingdom") {
@@ -70,7 +72,7 @@ export function useCityData(country, setCityData, setDataCount) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:5001/city/country-info/${country}`);
+        const response = await fetch(`${BASE_URL}/city/country-info/${country}`);
         const data = await response.json();
         setCityData(data.location);
         setDataCount(4);
@@ -87,7 +89,7 @@ export function useWeather(city, countryCode, setWeatherData, setWeatherCodeImg,
   useEffect(() => {
     async function fetchWeather() {
       try {
-        const response = await fetch(`http://localhost:5001/city/weather?city=${city}&countryCode=${countryCode}`);
+        const response = await fetch(`${BASE_URL}/city/weather?city=${city}&countryCode=${countryCode}`);
         const data = await response.json();
 
         if (!response.ok) {

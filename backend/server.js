@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5001;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  `https://117a-149-170-253-185.ngrok-free.app`,
+  `https://adventure-api-jet.vercel.app`,
 ];
 
 const corsOptions = {

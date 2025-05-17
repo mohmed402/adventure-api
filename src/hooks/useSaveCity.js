@@ -7,7 +7,7 @@ export async function saveCityData({ name, mainImage, images = [], places = [], 
   }
 
   try {
-    const res = await fetch("http://localhost:5001/city/saveCity", {
+    const res = await fetch("adventure-api-production.up.railway.app/city/saveCity", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

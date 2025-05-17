@@ -1,6 +1,6 @@
 export default async function getData() {
     try {
-      const BASE_URL = "http://localhost:5001";
+      const BASE_URL = "adventure-api-production.up.railway.app";
       const url = new URL(`${BASE_URL}/users/data`);
   
   

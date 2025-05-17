@@ -111,4 +111,5 @@
 
   .cityImg {
     filter: invert(1);
+    border-radius: 10px;
   }

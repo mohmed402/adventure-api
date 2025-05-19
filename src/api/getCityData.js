@@ -1,6 +1,6 @@
 export default async function getCityData() {
     try {
-      const BASE_URL = "adventure-api-production.up.railway.app";
+      const BASE_URL = "https://adventure-api-production.up.railway.app";
       const url = new URL(`${BASE_URL}/city/data`);
   
   

@@ -19,7 +19,7 @@ export async function authRequest(formData, type = 'signup') {
       }
 
       // 2. Insert into your custom 'users' table via your backend
-      const insertRes = await fetch('adventure-api-production.up.railway.app/auth/insertUser', {
+      const insertRes = await fetch('https://adventure-api-production.up.railway.app/auth/insertUser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

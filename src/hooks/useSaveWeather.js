@@ -4,7 +4,7 @@ export async function saveWeatherData(city, countryCode) {
 
     try {
       const res = await fetch(
-        `adventure-api-production.up.railway.app/weather/saveWeather?city=${encodeURIComponent(city)}&countryCode=${countryCode}`,
+        `https://adventure-api-production.up.railway.app/weather/saveWeather?city=${encodeURIComponent(city)}&countryCode=${countryCode}`,
         {
           method: 'GET'
         }

@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 
-const BASE_URL = "adventure-api-production.up.railway.app";
+const BASE_URL = "https://adventure-api-production.up.railway.app";
 export function useCityImages(cityArray, cityName, setCitySrc, setCityArray, setDataCount) {
   useEffect(() => {
     async function fetchImages() {
